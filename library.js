@@ -30,9 +30,13 @@ var library = {
 // p02: Other Playlist - 1 tracks
 
 var printPlaylists = function () {
-
+  for (var playlist in library["playlists"])
+    {
+      console.log(library.playlists[playlist].id, ":",library.playlists[playlist].name , "-", library.playlists[playlist].tracks.length, 'tracks')
+    }
 }
 
+printPlaylists();
 
 // prints a list of all tracks, in the form:
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
@@ -40,9 +44,13 @@ var printPlaylists = function () {
 // t03: Four Thirty-Three by John Cage (Woodstock 1952)
 
 var printTracks = function () {
-
+  for (var track in library["tracks"])
+  {
+    console.log(library.tracks[track].id + ": " + library.tracks[track].name + " by " + library.tracks[track].artist + ' (' + library.tracks[track].album + ')');
+  }
 }
 
+printTracks();
 
 // prints a list of tracks for a given playlist, in the form:
 // p01: Coding Music - 2 tracks
@@ -50,16 +58,23 @@ var printTracks = function () {
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 
 var printPlaylist = function (playlistId) {
-
+  console.log(library.playlists[playlistId].id + ":",library.playlists[playlistId].name , "-", library.playlists[playlistId].tracks.length, 'tracks');
+  for (var i = 0; i < library.playlists[playlistId].tracks.length; i++) {
+    var trackNo = library.playlists[playlistId].tracks[i];
+    console.log(library.tracks[trackNo].id + ": " + library.tracks[trackNo].name + " by " + library.tracks[trackNo].artist + ' (' + library.tracks[trackNo].album + ')');
+  }
 }
 
+printPlaylist("p01");
 
 // adds an existing track to an existing playlist
 
 var addTrackToPlaylist = function (trackId, playlistId) {
-
+  library.playlists[playlistId].tracks.push(trackId);
 }
 
+addTrackToPlaylist("t03", "p01");
+printPlaylist("p01");
 
 // generates a unique id
 // (use this for addTrack and addPlaylist)
@@ -72,23 +87,41 @@ var uid = function() {
 // adds a track to the library
 
 var addTrack = function (name, artist, album) {
-
+  var i = uid();
+  library.tracks[i] = {
+    id:i,
+    name: name,
+    artist: artist,
+    album: album
+  }
 }
+
+addTrack("James","Lebron","Miami");
+printTracks();
 
 
 // adds a playlist to the library
 
 var addPlaylist = function (name) {
-
+  var i = uid();
+  library.playlists[i] = {
+    id: i,
+    name,
+    tracks: []
+  };
 }
+
+addPlaylist("Blah");
+printPlaylists();
+
 
 
 // STRETCH:
 // given a query string string, prints a list of tracks
 // where the name, artist or album contains the query string (case insensitive)
-// tip: use "string".search("tri") 
+// tip: use "string".search("tri")
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
 
-var printSearchResults = function(query) {
+// var printSearchResults = function(query) {
 
-}
+// }
